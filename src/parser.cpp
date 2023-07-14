@@ -86,19 +86,17 @@ auto Parser::parse() -> std::unique_ptr<ExprAST> {
 }
 
 auto Parser::parse_paren_expr() -> std::unique_ptr<ExprAST> {
-    // Expect an opening parenthesis
     if (!match(TokenType::LPAREN))
         return log_error("Expected '(' on line " + std::to_string(m_current_token.line));
 
-    // Parse the expression inside the parentheses
     advance();
-    auto res = expr();
+    auto res {expr()};
 
     // Expect a closing parenthesis
     if (!match(TokenType::RPAREN))
         return log_error("Expected ')' on line " + std::to_string(m_current_token.line));
 
-    advance();  // Move past the closing parenthesis
+    advance();  
 
     return res;
 }
